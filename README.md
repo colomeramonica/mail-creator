@@ -1,8 +1,44 @@
-# React + Vite
+# Mail Creator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project was created to streamline the work of the Marketing team at the company where I work.
 
-Currently, two official plugins are available:
+Every month, birthday emails are sent with the birthdays of the month separated by day.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Initially, this task was done manually by consulting an Excel spreadsheet with the data of all employees.
+
+The project aims to simplify this process by receiving the Excel spreadsheet, separating the birthdays, and generating the PDF to be attached to the emails.
+
+## Technologies Used
+
+- [Next.js 14](https://nextjs.org/docs/getting-started)
+- [NextUI v2](https://nextui.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Tailwind Variants](https://tailwind-variants.org)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [next-themes](https://github.com/pacocoursey/next-themes)
+- [html2canvas](https://ekoopmans.github.io/html2pdf.js/)
+
+## How to Use
+
+Download the project 
+
+```bash
+git clone github.com/colomeramonica/mail-creator && cd mail-creator
+```
+
+### Install dependencies
+
+Using `npm`:
+
+```bash
+npm install
+```
+
+### Run the development server
+
+```bash
+npm run dev
+```
+
+#### Keep in mind that this project was designed with a particular worksheet format in mind and may not be suitable for other formats.
