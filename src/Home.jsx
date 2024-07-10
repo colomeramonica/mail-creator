@@ -14,7 +14,7 @@ export const Home = () => {
 
 
   const loadTemplateView = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
 
     if (model === "birthdays") {
       return setTemplateView("birthdays");
