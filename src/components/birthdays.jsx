@@ -114,7 +114,7 @@ export default function Birthdays({ file, desiredMonth }) {
               </div>
             </div>
             <Button
-              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg rounded p-3 m-5"
+              className="bg-green-950 text-white shadow-lg rounded-2xl p-3 m-5"
               onClick={generatePDF.bind(null, date)}
             >
               Gerar PDF para o dia

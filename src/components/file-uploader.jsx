@@ -41,7 +41,7 @@ export default function FileUploader({ onFileSelected }) {
           onChange={handleFileChange}
         />
         <Button
-          className="bg-gradient-to-tr from-cyan-700 to-blue-200 text-white shadow-lg rounded p-3"
+          className="bg-blue-500 text-white shadow-lg rounded-2xl p-3"
           onClick={handleClick}
           leftIcon={<DownloadIcon />}
         >

@@ -8,9 +8,9 @@ import { Button, Radio, RadioGroup, Select, Stack } from "@chakra-ui/react";
 
 export const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [model] = useState("birthdays");
+  const [model, setModel] = useState("birthdays");
   const [desiredMonth, setDesiredMonth] = useState("1");
-  const [templateView, setTemplateView] = useState("");
+  const [templateView, setTemplateView] = useState("birthdays");
 
 
   const loadTemplateView = (event) => {
@@ -40,14 +40,12 @@ export const Home = () => {
             <FileUploader onFileSelected={setSelectedFile} />
           </div>
           <div className="p-3">
-            <div className="flex row gap-2 items-stretch justify-center">
-              <RadioGroup
-                value={model}
-                onChange={handleChange}
+            <div className="">
+              <RadioGroup value={model} onChange={handleChange}
               >
-                 <Stack direction='row'>
-                  <Radio size='md' value="birthdays" defaultChecked>Aniversários do mês</Radio>
-                  <Radio size='md' value="recognition">Tempo de casa</Radio>
+                 <Stack direction="row">
+                  <Radio value="birthdays" defaultChecked>Aniversários do mês</Radio>
+                  <Radio value="recognition">Tempo de casa</Radio>
                 </Stack>
               </RadioGroup>
             </div>
@@ -68,7 +66,7 @@ export const Home = () => {
           </div>
         </div>
         <Button
-          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg rounded p-3"
+          className="bg-orange-500 text-white shadow-lg rounded-2xl p-3"
           onClick={loadTemplateView}
         >
           Separar registros
