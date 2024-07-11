@@ -27,8 +27,8 @@ export default function FileUploader({ onFileSelected }) {
     <form className="flex row gap-2">
       <Input
         isReadOnly
-        className="max-w-xs"
-        placeholder="Select a file"
+        className="max-w-xs border border-gray-300 rounded-md p-2"
+        placeholder="Planilha dos dados"
         value={selectedFile ? selectedFile.name : ""}
         variant="outline"
         size="md"
