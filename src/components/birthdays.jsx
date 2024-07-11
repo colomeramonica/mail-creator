@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import readXlsxFile from "read-excel-file";
 import html2PDF from "jspdf-html2canvas";
-import { Button, Image } from '@chakra-ui/react'
+import { AspectRatio, Button, Image } from '@chakra-ui/react'
 import birthdayPhoto from '../assets/birthday-photo.jpg';
 import logo from '../assets/logo-jacto.jpg';
 
@@ -73,18 +73,19 @@ export default function Birthdays({ file, desiredMonth }) {
         {Object.entries(collaboratorsData).map(([date, collaborators]) => (
           <>
             <div key={date} id={`birthday-card-${date}`}>
+            <AspectRatio maxW="500px" ratio={ 720 / 365}>
               <Image
                 alt="Birthday"
-                boxSize="500px 200px"
-                objectFit="fill"
+                objectFit="cover"
                 src={birthdayPhoto}
               />
+              </AspectRatio>
               <div className="flex flex-col items-center content-center ml-6 p-3">
                 <h1 className="uppercase text-templateBlue mt-3 font-template font-extrabold text-2xl justify-start">
                   Happy Birthday!
                 </h1>
                 <div className="flex flex-row items-center content-center p-2 justify-start">
-                  <CalendarIcon width="36" className="text-templateGray" />
+                  <CalendarIcon width="36" color={"rgb(69 66 66)"} />
                   <span className="m-1 text-templateGray font-template text-base font-bold">
                     {date}
                   </span>
@@ -102,9 +103,18 @@ export default function Birthdays({ file, desiredMonth }) {
                   </div>
                 ))}
               </div>
+              <div className="p-5 ml-7 mt-40">
+                <AspectRatio maxW="100px" ratio={ 2032 / 457}>
+                <Image
+                  alt="Jacto Logo"
+                  objectFit="cover"
+                  src={logo}
+                />
+                </AspectRatio>
+              </div>
             </div>
             <Button
-              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg rounded p-3 m-5"
+              className="bg-green-950 text-white shadow-lg rounded-2xl p-3 m-5"
               onClick={generatePDF.bind(null, date)}
             >
               Gerar PDF para o dia

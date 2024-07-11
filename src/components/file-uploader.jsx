@@ -27,8 +27,8 @@ export default function FileUploader({ onFileSelected }) {
     <form className="flex row gap-2">
       <Input
         isReadOnly
-        className="max-w-xs"
-        placeholder="Select a file"
+        className="max-w-xs border border-gray-300 rounded-md p-2"
+        placeholder="Planilha dos dados"
         value={selectedFile ? selectedFile.name : ""}
         variant="outline"
         size="md"
@@ -41,7 +41,7 @@ export default function FileUploader({ onFileSelected }) {
           onChange={handleFileChange}
         />
         <Button
-          className="bg-gradient-to-tr from-cyan-700 to-blue-200 text-white shadow-lg rounded p-3"
+          className="bg-blue-500 text-white shadow-lg rounded-2xl p-3"
           onClick={handleClick}
           leftIcon={<DownloadIcon />}
         >
