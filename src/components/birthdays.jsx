@@ -103,7 +103,7 @@ export default function Birthdays({ file, desiredMonth }) {
                   </div>
                 ))}
               </div>
-              <div className="p-3 ml-7 mt-30">
+              <div className="p-5 ml-7 mt-40">
                 <AspectRatio maxW="100px" ratio={ 2032 / 457}>
                 <Image
                   alt="Jacto Logo"
