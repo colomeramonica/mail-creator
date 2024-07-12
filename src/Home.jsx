@@ -90,10 +90,14 @@ export const Home = () => {
           Separar registros
         </Button>
         {templateView === "birthdays" && (
+          <div className="flex flex-col justify-center align-middle">
           <Birthdays desiredMonth={desiredMonth} file={selectedFile} />
+          </div>
         )}
         {templateView === "recognition" && (
-          <Recognition file={selectedFile} desiredMonth={desiredMonth} />
+          <div className="flex flex-col justify-center align-middle">
+            <Recognition file={selectedFile} desiredMonth={desiredMonth} />
+          </div>
         )}
       </div>
     </section>

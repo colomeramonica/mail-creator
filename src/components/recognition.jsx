@@ -32,16 +32,15 @@ export default function Recognition({ file, desiredMonth }) {
             const typedRow = row;
 
             let worksheetDate = typedRow[7];
-            const dateObj = new Date(worksheetDate);
-            const month = dateObj.getUTCMonth() + 1;
-            const formattedDate = formatDate(dateObj);
+            const month = worksheetDate.getUTCMonth() + 1;
+            const formattedDate = formatDate(worksheetDate);
 
             if (month.toString() === desiredMonth) {
               const collaborator = {
                 name: typedRow[1],
                 date: worksheetDate,
                 hireDate: formattedDate,
-                years: new Date().getFullYear() - dateObj.getFullYear(),
+                years: new Date().getFullYear() - worksheetDate.getFullYear(),
                 department: typedRow[5],
               };
 
@@ -52,12 +51,6 @@ export default function Recognition({ file, desiredMonth }) {
               groupedData.push(collaborator);
             }
           });
-        });
-
-        const sortedData = [...groupedData].sort((a, b) => {
-          const dateA = new Date(a.date).getTime();
-          const dateB = new Date(b.date).getTime();
-          return dateA - dateB;
         });
 
         setCollaboratorsData(groupedData);
