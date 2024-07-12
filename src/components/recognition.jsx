@@ -1,9 +1,11 @@
-import { Button } from "@chakra-ui/react";
+import { AspectRatio, Button, Image } from "@chakra-ui/react";
 import html2PDF from "jspdf-html2canvas";
 import PropTypes from "prop-types";
 import readXlsxFile from "read-excel-file";
 import { formatDate } from "../utils/utils";
 import { useEffect, useState } from "react";
+import logo from '../assets/logo-jacto.jpg';
+
 export default function Recognition({ file, desiredMonth }) {
   Recognition.propTypes = {
     file: PropTypes.object.isRequired,
@@ -31,20 +33,31 @@ export default function Recognition({ file, desiredMonth }) {
 
             let worksheetDate = typedRow[7];
             const dateObj = new Date(worksheetDate);
-            const month = dateObj.getMonth() + 1;
+            const month = dateObj.getUTCMonth() + 1;
             const formattedDate = formatDate(dateObj);
 
             if (month.toString() === desiredMonth) {
               const collaborator = {
                 name: typedRow[1],
+                date: worksheetDate,
                 hireDate: formattedDate,
                 years: new Date().getFullYear() - dateObj.getFullYear(),
                 department: typedRow[5],
               };
 
+              if (collaborator.years === 0) {
+                return;
+              }
+
               groupedData.push(collaborator);
             }
           });
+        });
+
+        const sortedData = [...groupedData].sort((a, b) => {
+          const dateA = new Date(a.date).getTime();
+          const dateB = new Date(b.date).getTime();
+          return dateA - dateB;
         });
 
         setCollaboratorsData(groupedData);
@@ -66,12 +79,12 @@ export default function Recognition({ file, desiredMonth }) {
   };
 
   return (
-    <div className="flex flex-col w-max p-3 justify-center align-middle">
-      <div id="recognition-table" className="justify-center">
-        <div className="m-5" id={`recognition-table-${desiredMonth}`}>
-          <div className="flex flex-col items-center content-center ml-6 p-3">
+    <div className="flex flex-col p-3 justify-center items-center">
+      <div id="recognition-table" className="flex justify-center items-center w-max h-max">
+        <div className="flex flex-col w-max justify-center items-center" id={`recognition-table-${desiredMonth}`}>
+          <div className="flex flex-col items-center ml-6 p-1">
             <h1 className="uppercase text-templateBlue mt-3 font-template font-extrabold text-2xl justify-start">
-              Recognition | {getMonthNameByIndex(desiredMonth) + ' ' + new Date().getFullYear()}
+              Recognition | {getMonthNameByIndex((desiredMonth) - 1) + ' ' + new Date().getFullYear()}
             </h1>
             <h3 className="text-templateBlue font-template">(Company Time)</h3>
           </div>
@@ -87,8 +100,7 @@ export default function Recognition({ file, desiredMonth }) {
                 </tr>
               </thead>
               <tbody key={desiredMonth}>
-                {Object.entries(collaboratorsData).map((collaborators) => (
-                  collaborators.map((collaborator) => (
+                  {collaboratorsData.map((collaborator) => (
                     <tr key={collaborator.name}>
                       <td className="border px-4 py-2 font-template">{collaborator.name}</td>
                       <td className="border px-4 py-2 font-template">{collaborator.hireDate}</td>
@@ -96,10 +108,17 @@ export default function Recognition({ file, desiredMonth }) {
                       <td className="border px-4 py-2 font-template">{collaborator.department}</td>
                       {/* <td className="border px-4 py-2 font-template">{collaborator.country}</td> */}
                     </tr>
-                  ))
-                ))}
+                  ))}
               </tbody>
             </table>
+            <div className="flex flex-row justify-between align-baseline">
+              <p className="uppercase text-templateBlue mt-3 font-template font-extrabold">
+                Happiness in sharing!
+              </p>
+              <div className="p-3">
+                <img src={logo} alt="Jacto Logo" width="100px" height="50px" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
