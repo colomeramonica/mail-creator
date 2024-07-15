@@ -12,7 +12,7 @@ export default function Recognition({ file, desiredMonth }) {
     desiredMonth: PropTypes.string.isRequired
   };
 
-  const [collaboratorsData, setCollaboratorsData] = useState({});
+  const [collaboratorsData, setCollaboratorsData] = useState([]);
 
   useEffect(() => {
     if (!file) return;
@@ -89,7 +89,6 @@ export default function Recognition({ file, desiredMonth }) {
                   <th className="px-4 py-2 text-white font-template border">Admission</th>
                   <th className="px-4 py-2 text-white font-template border">Years</th>
                   <th className="px-4 py-2 text-white font-template border">Department</th>
-                  {/* <th className="px-4 py-2 text-white font-template border">Country</th> */}
                 </tr>
               </thead>
               <tbody key={desiredMonth}>
@@ -99,7 +98,6 @@ export default function Recognition({ file, desiredMonth }) {
                       <td className="border px-4 py-2 font-template">{collaborator.hireDate}</td>
                       <td className="border px-4 py-2 font-template">{collaborator.years}</td>
                       <td className="border px-4 py-2 font-template">{collaborator.department}</td>
-                      {/* <td className="border px-4 py-2 font-template">{collaborator.country}</td> */}
                     </tr>
                   ))}
               </tbody>
