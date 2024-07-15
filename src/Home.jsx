@@ -40,6 +40,14 @@ export const Home = () => {
           <div className="p-3 justify-center align-middle">
             <FileUploader onFileSelected={setSelectedFile} />
           </div>
+          <div>
+            <blockquote className="text-gray-500 text-sm align-middle ">
+              Selecione o arquivo Excel com os dados dos colaboradores.<br />
+            </blockquote>
+            <blockquote className="text-gray-500 text-sm align-middle text-justify">
+              <b>Lembrete!</b> O departamento precisa ser ajustado manualmente na planilha antes de ser exportado! (😬)
+            </blockquote>
+          </div>
           <div className="p-3">
             <div className="flex flex-row justify-center">
               <div className="form-check m-1">

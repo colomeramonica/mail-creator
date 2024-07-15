@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import readXlsxFile from "read-excel-file";
 import html2PDF from "jspdf-html2canvas";
-import { AspectRatio, Button, Image } from '@chakra-ui/react'
+import { AspectRatio, Button, Image } from '@chakra-ui/react';
 import birthdayPhoto from '../assets/birthday-photo.jpg';
 import logo from '../assets/logo-jacto.jpg';
-
 import { CalendarIcon } from "@chakra-ui/icons";
 import { formatDate } from "../utils/utils";
 import PropTypes from "prop-types";
@@ -27,35 +26,58 @@ export default function Birthdays({ file, desiredMonth }) {
       if (result) {
         const data = new Uint8Array(result);
         let groupedData = {};
-
+      
         readXlsxFile(data).then((rows) => {
+          let orderedData = []; 
+      
           rows.forEach((row, rowIndex) => {
             if (rowIndex === 0) return;
             const typedRow = row;
-
+      
             let worksheetDate = typedRow[6];
             const dateObj = new Date(worksheetDate);
             const month = dateObj.getMonth() + 1;
             const formattedDate = formatDate(dateObj);
-
+      
             if (month.toString() === desiredMonth) {
               const collaborator = {
                 name: typedRow[1],
                 position: typedRow[3],
                 unity: typedRow[5],
+                date: worksheetDate,
                 birthday: formattedDate,
               };
-
-              if (!groupedData[formattedDate]) {
-                groupedData[formattedDate] = [];
-              }
-
-              groupedData[formattedDate].push(collaborator);
+      
+              orderedData.push(collaborator);
             }
           });
+      
+          orderedData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            const monthA = dateA.getUTCMonth();
+            const monthB = dateB.getUTCMonth();
+            const dayA = dateA.getUTCDate();
+            const dayB = dateB.getUTCDate();
+          
+            if (monthA < monthB) return -1;
+            if (monthA > monthB) return 1;
+            if (dayA < dayB) return -1;
+            if (dayA > dayB) return 1;
+            return 0;
+          });
+      
+          groupedData = orderedData.reduce((acc, collaborator) => {
+            const { birthday } = collaborator; 
+            if (!acc[birthday]) {
+              acc[birthday] = [];
+            }
+            acc[birthday].push(collaborator);
+            return acc;
+          }, {});
+      
+          setCollaboratorsData(groupedData);
         });
-
-        setCollaboratorsData(groupedData);
       }
     };
     reader.readAsArrayBuffer(file);
@@ -73,12 +95,12 @@ export default function Birthdays({ file, desiredMonth }) {
         {Object.entries(collaboratorsData).map(([date, collaborators]) => (
           <>
             <div key={date} id={`birthday-card-${date}`}>
-            <AspectRatio maxW="500px" ratio={ 720 / 365}>
-              <Image
-                alt="Birthday"
-                objectFit="cover"
-                src={birthdayPhoto}
-              />
+              <AspectRatio maxW="500px" ratio={720 / 365}>
+                <Image
+                  alt="Birthday"
+                  objectFit="cover"
+                  src={birthdayPhoto}
+                />
               </AspectRatio>
               <div className="flex flex-col items-center content-center ml-6 p-3">
                 <h1 className="uppercase text-templateBlue mt-3 font-template font-extrabold text-2xl justify-start">

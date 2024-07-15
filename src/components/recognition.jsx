@@ -12,7 +12,7 @@ export default function Recognition({ file, desiredMonth }) {
     desiredMonth: PropTypes.string.isRequired
   };
 
-  const [collaboratorsData, setCollaboratorsData] = useState({});
+  const [collaboratorsData, setCollaboratorsData] = useState([]);
 
   useEffect(() => {
     if (!file) return;
@@ -51,9 +51,24 @@ export default function Recognition({ file, desiredMonth }) {
               groupedData.push(collaborator);
             }
           });
-        });
 
-        setCollaboratorsData(groupedData);
+          groupedData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            const monthA = dateA.getUTCMonth();
+            const monthB = dateB.getUTCMonth();
+            const dayA = dateA.getUTCDate();
+            const dayB = dateB.getUTCDate();
+          
+            if (monthA < monthB) return -1;
+            if (monthA > monthB) return 1;
+            if (dayA < dayB) return -1;
+            if (dayA > dayB) return 1;
+            return 0;
+          });
+
+          setCollaboratorsData(groupedData);
+        });
       }
     };
     reader.readAsArrayBuffer(file);
@@ -89,7 +104,6 @@ export default function Recognition({ file, desiredMonth }) {
                   <th className="px-4 py-2 text-white font-template border">Admission</th>
                   <th className="px-4 py-2 text-white font-template border">Years</th>
                   <th className="px-4 py-2 text-white font-template border">Department</th>
-                  {/* <th className="px-4 py-2 text-white font-template border">Country</th> */}
                 </tr>
               </thead>
               <tbody key={desiredMonth}>
@@ -99,7 +113,6 @@ export default function Recognition({ file, desiredMonth }) {
                       <td className="border px-4 py-2 font-template">{collaborator.hireDate}</td>
                       <td className="border px-4 py-2 font-template">{collaborator.years}</td>
                       <td className="border px-4 py-2 font-template">{collaborator.department}</td>
-                      {/* <td className="border px-4 py-2 font-template">{collaborator.country}</td> */}
                     </tr>
                   ))}
               </tbody>
