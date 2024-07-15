@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import { AspectRatio, Button, Image } from "@chakra-ui/react";
+=======
+import { Button } from "@chakra-ui/react";
+>>>>>>> 490515925664e89763ed777b788f6403fa2b5227
 import html2PDF from "jspdf-html2canvas";
 import PropTypes from "prop-types";
 import readXlsxFile from "read-excel-file";
 import { formatDate } from "../utils/utils";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import logo from '../assets/logo-jacto.jpg';
 
+=======
+>>>>>>> 490515925664e89763ed777b788f6403fa2b5227
 export default function Recognition({ file, desiredMonth }) {
   Recognition.propTypes = {
     file: PropTypes.object.isRequired,
@@ -32,12 +39,19 @@ export default function Recognition({ file, desiredMonth }) {
             const typedRow = row;
 
             let worksheetDate = typedRow[7];
+<<<<<<< HEAD
             const month = worksheetDate.getUTCMonth() + 1;
             const formattedDate = formatDate(worksheetDate);
+=======
+            const dateObj = new Date(worksheetDate);
+            const month = dateObj.getMonth() + 1;
+            const formattedDate = formatDate(dateObj);
+>>>>>>> 490515925664e89763ed777b788f6403fa2b5227
 
             if (month.toString() === desiredMonth) {
               const collaborator = {
                 name: typedRow[1],
+<<<<<<< HEAD
                 date: worksheetDate,
                 hireDate: formattedDate,
                 years: new Date().getFullYear() - worksheetDate.getFullYear(),
@@ -48,6 +62,13 @@ export default function Recognition({ file, desiredMonth }) {
                 return;
               }
 
+=======
+                hireDate: formattedDate,
+                years: new Date().getFullYear() - dateObj.getFullYear(),
+                department: typedRow[5],
+              };
+
+>>>>>>> 490515925664e89763ed777b788f6403fa2b5227
               groupedData.push(collaborator);
             }
           });
