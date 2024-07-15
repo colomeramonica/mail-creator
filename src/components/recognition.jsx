@@ -32,7 +32,6 @@ export default function Recognition({ file, desiredMonth }) {
             const typedRow = row;
 
             let worksheetDate = typedRow[7];
-
             const month = worksheetDate.getUTCMonth() + 1;
             const formattedDate = formatDate(worksheetDate);
 
