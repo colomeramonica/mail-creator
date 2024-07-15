@@ -32,6 +32,7 @@ export default function Recognition({ file, desiredMonth }) {
             const typedRow = row;
 
             let worksheetDate = typedRow[7];
+
             const month = worksheetDate.getUTCMonth() + 1;
             const formattedDate = formatDate(worksheetDate);
 
@@ -51,9 +52,24 @@ export default function Recognition({ file, desiredMonth }) {
               groupedData.push(collaborator);
             }
           });
-        });
 
-        setCollaboratorsData(groupedData);
+          groupedData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            const monthA = dateA.getUTCMonth();
+            const monthB = dateB.getUTCMonth();
+            const dayA = dateA.getUTCDate();
+            const dayB = dateB.getUTCDate();
+          
+            if (monthA < monthB) return -1;
+            if (monthA > monthB) return 1;
+            if (dayA < dayB) return -1;
+            if (dayA > dayB) return 1;
+            return 0;
+          });
+
+          setCollaboratorsData(groupedData);
+        });
       }
     };
     reader.readAsArrayBuffer(file);
