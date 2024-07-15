@@ -4,18 +4,34 @@ import { months } from "./data/months";
 
 import FileUploader from "./components/file-uploader";
 import Birthdays from "./components/birthdays";
-import { Button, Select } from "@chakra-ui/react";
+import { Button, Select, Text } from "@chakra-ui/react";
 import Recognition from "./components/recognition";
 
 export const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [model, setModel] = useState("");
+  const [model, setModel] = useState("birthdays");
   const [desiredMonth, setDesiredMonth] = useState("1");
   const [templateView, setTemplateView] = useState("");
+  const [error, setError] = useState("");
 
+  const loadTemplateView = () => {
+    setError('');
+    if (!selectedFile) {
+      setError('Nenhum arquivo selecionado.');
+      return;
+    }
 
-  const loadTemplateView = (event) => {
-    event.preventDefault();
+    if (selectedFile) {
+      const allowedTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel'
+      ];
+
+      if (!allowedTypes.includes(selectedFile.type)) {
+        setError("Apenas arquivos Excel são permitidos (.xls, .xlsx).");
+        return;
+      }
+    }
 
     if (model === "birthdays") {
       return setTemplateView("birthdays");
@@ -68,7 +84,7 @@ export const Home = () => {
                   type="radio"
                   value="recognition"
                   name="radio-sizes"
-                  id="radio-small" 
+                  id="radio-small"
                   checked={model === 'recognition'}
                   onChange={handleChange}
                 />
@@ -97,9 +113,12 @@ export const Home = () => {
         >
           Separar registros
         </Button>
+        {error && <div className="p-3">
+          <Text className="border text-white bg-red-500 shadow-lg rounded-2xl p-3">{error}</Text>
+        </div>}
         {templateView === "birthdays" && (
           <div className="flex flex-col justify-center align-middle">
-          <Birthdays desiredMonth={desiredMonth} file={selectedFile} />
+            <Birthdays desiredMonth={desiredMonth} file={selectedFile} />
           </div>
         )}
         {templateView === "recognition" && (
