@@ -12,6 +12,7 @@ The project aims to simplify this process by receiving the Excel spreadsheet, se
 
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
+- [Chakra UI](https://v2.chakra-ui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [html2canvas](https://ekoopmans.github.io/html2pdf.js/)
 
