@@ -13,6 +13,8 @@ export function excelSerialDateToDate(serialDate: number) {
 export function formatDate(dateString: Date) {
   const date = new Date(dateString);
 
+  date.setDate(date.getDate() + 1);
+
   const monthNames = [
     "January",
     "February",
@@ -28,7 +30,7 @@ export function formatDate(dateString: Date) {
     "December",
   ];
 
-  const day = date.getDate() + 1;
+  const day = date.getDate();
   const monthIndex = date.getMonth();
   const monthName = monthNames[monthIndex];
 

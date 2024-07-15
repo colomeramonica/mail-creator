@@ -103,14 +103,10 @@ export default function Birthdays({ file, desiredMonth }) {
                   </div>
                 ))}
               </div>
-              <div className="p-5 ml-7 mt-40">
-                <AspectRatio maxW="100px" ratio={ 2032 / 457}>
-                <Image
-                  alt="Jacto Logo"
-                  objectFit="cover"
-                  src={logo}
-                />
-                </AspectRatio>
+              <div className="flex flex-row justify-between align-baseline">
+                <div className="p-5 ml-7 mt-30">
+                  <img src={logo} alt="Jacto Logo" width="100px" height="50px" />
+                </div>
               </div>
             </div>
             <Button

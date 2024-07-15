@@ -35,7 +35,7 @@ export const Home = () => {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-lg text-center justify-center">
-        <h1 className="text-3xl mb-3 font-bold">Mail Creator</h1>
+        <h1 className="text-3xl mb-3 font-bold">Conversor Excel/PDF</h1>
         <div className="flex flex-col justify-center">
           <div className="p-3 justify-center align-middle">
             <FileUploader onFileSelected={setSelectedFile} />
@@ -90,10 +90,14 @@ export const Home = () => {
           Separar registros
         </Button>
         {templateView === "birthdays" && (
+          <div className="flex flex-col justify-center align-middle">
           <Birthdays desiredMonth={desiredMonth} file={selectedFile} />
+          </div>
         )}
         {templateView === "recognition" && (
-          <Recognition file={selectedFile} desiredMonth={desiredMonth} />
+          <div className="flex flex-col justify-center align-middle">
+            <Recognition file={selectedFile} desiredMonth={desiredMonth} />
+          </div>
         )}
       </div>
     </section>
