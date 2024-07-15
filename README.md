@@ -8,10 +8,15 @@ Initially, this task was done manually by consulting an Excel spreadsheet with t
 
 The project aims to simplify this process by receiving the Excel spreadsheet, separating the birthdays, and generating the PDF to be attached to the emails.
 
+
+https://github.com/user-attachments/assets/1688ef54-1560-4eb3-9c53-b17e3b2d3904
+
+
 ## Technologies Used
 
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
+- [Chakra UI](https://v2.chakra-ui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [html2canvas](https://ekoopmans.github.io/html2pdf.js/)
 
