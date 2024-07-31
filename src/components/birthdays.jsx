@@ -7,6 +7,7 @@ import logo from '../assets/logo-jacto.jpg';
 import { CalendarIcon } from "@chakra-ui/icons";
 import { formatDate } from "../utils/utils";
 import PropTypes from "prop-types";
+import { toPng } from 'html-to-image';
 
 export default function Birthdays({ file, desiredMonth }) {
   Birthdays.propTypes = {
@@ -86,7 +87,16 @@ export default function Birthdays({ file, desiredMonth }) {
   function generatePDF(date) {
     const input = document.getElementById(`birthday-card-${date}`);
 
-    html2PDF(input);
+    toPng(input)
+      .then((dataUrl) => {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `birthday-card-${date}.png`;
+      link.click();
+      })
+      .catch((error) => {
+      console.error("Error exporting image:", error);
+      });
   }
 
   return (
@@ -94,7 +104,7 @@ export default function Birthdays({ file, desiredMonth }) {
       <div id="birthday-card">
         {Object.entries(collaboratorsData).map(([date, collaborators]) => (
           <>
-            <div key={date} id={`birthday-card-${date}`}>
+            <div key={date} id={`birthday-card-${date}`} className="bg-white">
               <AspectRatio maxW="500px" ratio={720 / 365}>
                 <Image
                   alt="Birthday"
