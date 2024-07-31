@@ -1,5 +1,4 @@
 import { Button } from "@chakra-ui/react";
-import html2PDF from "jspdf-html2canvas";
 import PropTypes from "prop-types";
 import readXlsxFile from "read-excel-file";
 import { formatDate } from "../utils/utils";
@@ -60,7 +59,7 @@ export default function Recognition({ file, desiredMonth }) {
             const monthB = dateB.getUTCMonth();
             const dayA = dateA.getUTCDate();
             const dayB = dateB.getUTCDate();
-          
+
             if (monthA < monthB) return -1;
             if (monthA > monthB) return 1;
             if (dayA < dayB) return -1;
@@ -80,13 +79,22 @@ export default function Recognition({ file, desiredMonth }) {
 
     toPng(input)
       .then((dataUrl) => {
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `recognition-table-${desiredMonth}.png`;
-      link.click();
-      })
-      .catch((error) => {
-      console.error("Error exporting image:", error);
+        const canvas = document.createElement("canvas");
+        canvas.width = 720;
+        canvas.height = 820;
+        const ctx = canvas.getContext("2d");
+        const img = document.createElement("img");
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, 720, 820);
+          const resizedDataUrl = canvas.toDataURL("image/png");
+          const link = document.createElement("a");
+          link.href = resizedDataUrl;
+          link.download = `recognition-table-${desiredMonth}.png`;
+          link.click();
+        };
+        img.src = dataUrl;
+      }).catch((error) => {
+        console.error("Error exporting image:", error);
       });
   }
 
@@ -117,14 +125,14 @@ export default function Recognition({ file, desiredMonth }) {
                 </tr>
               </thead>
               <tbody key={desiredMonth}>
-                  {collaboratorsData.map((collaborator) => (
-                    <tr key={collaborator.name}>
-                      <td className="border px-4 py-2 font-template">{collaborator.name}</td>
-                      <td className="border px-4 py-2 font-template">{collaborator.hireDate}</td>
-                      <td className="border px-4 py-2 font-template">{collaborator.years}</td>
-                      <td className="border px-4 py-2 font-template">{collaborator.department}</td>
-                    </tr>
-                  ))}
+                {collaboratorsData.map((collaborator) => (
+                  <tr key={collaborator.name}>
+                    <td className="border px-4 py-2 font-template">{collaborator.name}</td>
+                    <td className="border px-4 py-2 font-template">{collaborator.hireDate}</td>
+                    <td className="border px-4 py-2 font-template">{collaborator.years}</td>
+                    <td className="border px-4 py-2 font-template">{collaborator.department}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
             <div className="flex flex-row justify-between align-baseline">

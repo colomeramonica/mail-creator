@@ -89,10 +89,20 @@ export default function Birthdays({ file, desiredMonth }) {
 
     toPng(input)
       .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `birthday-card-${date}.png`;
-        link.click();
+        const canvas = document.createElement("canvas");
+        canvas.width = 720;
+        canvas.height = 820;
+        const ctx = canvas.getContext("2d");
+        const img = document.createElement("img");
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, 720, 820);
+          const resizedDataUrl = canvas.toDataURL("image/png");
+          const link = document.createElement("a");
+          link.href = resizedDataUrl;
+          link.download = `birthday-card-${date}.png`;
+          link.click();
+        };
+        img.src = dataUrl;
       })
       .catch((error) => {
         console.error("Error exporting image:", error);
