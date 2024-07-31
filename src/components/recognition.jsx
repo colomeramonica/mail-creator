@@ -5,6 +5,7 @@ import readXlsxFile from "read-excel-file";
 import { formatDate } from "../utils/utils";
 import { useEffect, useState } from "react";
 import logo from '../assets/logo-jacto.jpg';
+import { toPng } from "html-to-image";
 
 export default function Recognition({ file, desiredMonth }) {
   Recognition.propTypes = {
@@ -74,10 +75,19 @@ export default function Recognition({ file, desiredMonth }) {
     reader.readAsArrayBuffer(file);
   }, [file, desiredMonth]);
 
-  function generatePDF() {
+  function generateAttachment() {
     const input = document.getElementById(`recognition-table-${desiredMonth}`);
 
-    html2PDF(input);
+    toPng(input)
+      .then((dataUrl) => {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `recognition-table-${desiredMonth}.png`;
+      link.click();
+      })
+      .catch((error) => {
+      console.error("Error exporting image:", error);
+      });
   }
 
   const getMonthNameByIndex = (index) => {
@@ -131,9 +141,9 @@ export default function Recognition({ file, desiredMonth }) {
       <div className="flex flex-row">
         <Button
           className="bg-green-950 text-white shadow-lg rounded-2xl p-3 m-5"
-          onClick={generatePDF}
+          onClick={generateAttachment}
         >
-          Gerar PDF
+          Gerar anexo
         </Button>
       </div>
     </div>

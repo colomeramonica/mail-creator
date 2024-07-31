@@ -84,7 +84,7 @@ export default function Birthdays({ file, desiredMonth }) {
     reader.readAsArrayBuffer(file);
   }, [file, desiredMonth]);
 
-  function generatePDF(date) {
+  function generateAttachment(date) {
     const input = document.getElementById(`birthday-card-${date}`);
 
     toPng(input)
@@ -143,9 +143,9 @@ export default function Birthdays({ file, desiredMonth }) {
             </div>
             <Button
               className="bg-green-950 text-white shadow-lg rounded-2xl p-3 m-5"
-              onClick={generatePDF.bind(null, date)}
+              onClick={generateAttachment.bind(null, date)}
             >
-              Gerar PDF para o dia
+              Gerar anexo para o dia
             </Button>
           </>
         ))}
