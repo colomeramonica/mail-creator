@@ -99,7 +99,7 @@ export default function Recognition({ file, desiredMonth }) {
   return (
     <div className="flex flex-col p-3 justify-center items-center">
       <div id="recognition-table" className="flex justify-center items-center w-max h-max">
-        <div className="flex flex-col w-max justify-center items-center" id={`recognition-table-${desiredMonth}`}>
+        <div className="flex flex-col w-max justify-center items-center bg-white" id={`recognition-table-${desiredMonth}`}>
           <div className="flex flex-col items-center ml-6 p-1">
             <h1 className="uppercase text-templateBlue mt-3 font-template font-extrabold text-2xl justify-start">
               Recognition | {getMonthNameByIndex((desiredMonth) - 1) + ' ' + new Date().getFullYear()}
