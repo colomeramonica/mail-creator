@@ -27,19 +27,19 @@ export default function Birthdays({ file, desiredMonth }) {
       if (result) {
         const data = new Uint8Array(result);
         let groupedData = {};
-      
+
         readXlsxFile(data).then((rows) => {
-          let orderedData = []; 
-      
+          let orderedData = [];
+
           rows.forEach((row, rowIndex) => {
             if (rowIndex === 0) return;
             const typedRow = row;
-      
+
             let worksheetDate = typedRow[6];
             const dateObj = new Date(worksheetDate);
             const month = dateObj.getMonth() + 1;
             const formattedDate = formatDate(dateObj);
-      
+
             if (month.toString() === desiredMonth) {
               const collaborator = {
                 name: typedRow[1],
@@ -48,11 +48,11 @@ export default function Birthdays({ file, desiredMonth }) {
                 date: worksheetDate,
                 birthday: formattedDate,
               };
-      
+
               orderedData.push(collaborator);
             }
           });
-      
+
           orderedData.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
@@ -60,23 +60,23 @@ export default function Birthdays({ file, desiredMonth }) {
             const monthB = dateB.getUTCMonth();
             const dayA = dateA.getUTCDate();
             const dayB = dateB.getUTCDate();
-          
+
             if (monthA < monthB) return -1;
             if (monthA > monthB) return 1;
             if (dayA < dayB) return -1;
             if (dayA > dayB) return 1;
             return 0;
           });
-      
+
           groupedData = orderedData.reduce((acc, collaborator) => {
-            const { birthday } = collaborator; 
+            const { birthday } = collaborator;
             if (!acc[birthday]) {
               acc[birthday] = [];
             }
             acc[birthday].push(collaborator);
             return acc;
           }, {});
-      
+
           setCollaboratorsData(groupedData);
         });
       }
@@ -89,13 +89,13 @@ export default function Birthdays({ file, desiredMonth }) {
 
     toPng(input)
       .then((dataUrl) => {
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `birthday-card-${date}.png`;
-      link.click();
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `birthday-card-${date}.png`;
+        link.click();
       })
       .catch((error) => {
-      console.error("Error exporting image:", error);
+        console.error("Error exporting image:", error);
       });
   }
 
@@ -130,7 +130,7 @@ export default function Birthdays({ file, desiredMonth }) {
                       {collaborator.name}
                     </p>
                     <p className="font-template text-gray-500">
-                      {collaborator.position}
+                      {collaborator.unity}
                     </p>
                   </div>
                 ))}
